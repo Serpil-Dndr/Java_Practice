@@ -1,6 +1,8 @@
 package leet_Code;
 
 public class Roman_Numerals {
+    //bu soruyu coz bi ara
+
     public static void main(String[] args) {
 
 
@@ -10,53 +12,54 @@ public class Roman_Numerals {
     public static int romanToInt(String s) {
 
         int result = 0;
+        int prevValue = 0;
 
-        for (int i =  s.length();i>=0; i++) {
+        // Traverse the input string from right to left
+        for (int i = s.length() - 1; i >= 0; i--) {
+            char symbol = s.charAt(i);
+            int value;
 
-            int romanNum;
-            try {
-                switch (s.charAt(i)) {
-                    case 'I':
-                        romanNum = 1;
-                        break;
-                    case 'V':
-                        romanNum = 5;
-                        break;
-                    case 3:
-                        romanNum = 10;
-                        break;
-                    case 4:
-                        romanNum = 50;
-                        break;
-                    case 5:
-                        romanNum = 100;
-                        break;
-                    case 6:
-                        romanNum = 500;
-                        break;
-                    case 7:
-                        romanNum = 1000;
-                        break;
-                    default:
-                        romanNum = 0;
-
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            // Map each symbol to its corresponding value using a switch statement
+            switch (symbol) {
+                case 'I':
+                    value = 1;
+                    break;
+                case 'V':
+                    value = 5;
+                    break;
+                case 'X':
+                    value = 10;
+                    break;
+                case 'L':
+                    value = 50;
+                    break;
+                case 'C':
+                    value = 100;
+                    break;
+                case 'D':
+                    value = 500;
+                    break;
+                case 'M':
+                    value = 1000;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid Roman numeral: " + symbol);
             }
 
-            if(4*romanNum< result) result-=romanNum;
-           else result+=romanNum;
-        }
+            // If the current value is smaller than the previous value,
+            // it indicates subtraction. Subtract the current value from the result.
+            if (value < prevValue) {
+                result -= value;
+            }
+            // Otherwise, add the current value to the result.
+            else {
+                result += value;
+            }
 
+            // Update the previous value for the next iteration
+            prevValue = value;
+        }
 
         return result;
     }
-
-
 }
-
-
-
-
-
